@@ -13,6 +13,13 @@
         <cust:CustomerListViewModel />
     </UserControl.DataContext>-->
 
+    <!--Keyboard shortcut-->
+    <UserControl.InputBindings>
+        <KeyBinding Key="D"
+                    Modifiers="Control"
+                    Command="{Binding DeleteCommand}"/>
+    </UserControl.InputBindings>
+
     <UserControl.Resources>
         <!--<DataTemplate x:Key="CustomerTemplate">-->
         <!--Switching to an Implicit template-->
@@ -27,14 +34,22 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+        <Button Content="Delete"
+                Command="{Binding DeleteCommand}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Width="75"/>
         <!--<DataGrid ItemsSource="{Binding Customers}" />-->
         <DataGrid x:Name="customerDataGrid"
                   AutoGenerateColumns="False"
                   EnableRowVirtualization="True"
                   ItemsSource="{Binding Customers}"
+                  SelectedItem="{Binding SelectedCustomer}"
+                  Grid.Row="1"
                   RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="firstNameColumn"
@@ -51,7 +66,7 @@
                                     Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        <ListBox Grid.Row="1"
+        <ListBox Grid.Row="2"
                  ItemsSource="{Binding Customers}"/>
                 <!--Explicit template use-->
                 <!--ItemTemplate="{StaticResource CustomerTemplate}"/>-->
