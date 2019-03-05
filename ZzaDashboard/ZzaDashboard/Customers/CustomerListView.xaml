@@ -5,13 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cust="clr-namespace:ZzaDashboard.Customers"
              xmlns:local="clr-namespace:ZzaDashboard"
+             xmlns:data="clr-namespace:Zza.Data;assembly=Zza.Data"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              local:ViewModelLocator.AutoWireViewModel="True">
     <!--<UserControl.DataContext>
         <cust:CustomerListViewModel />
     </UserControl.DataContext>-->
+
+    <UserControl.Resources>
+        <!--<DataTemplate x:Key="CustomerTemplate">-->
+        <!--Switching to an Implicit template-->
+        <DataTemplate DataType="{x:Type data:Customer}">
+            <StackPanel>
+                <TextBlock Text="{Binding FirstName}"/>
+                <TextBlock Text="{Binding LastName}"/>
+                <TextBlock Text="{Binding Phone}"/>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <!--<DataGrid ItemsSource="{Binding Customers}" />-->
         <DataGrid x:Name="customerDataGrid"
                   AutoGenerateColumns="False"
@@ -33,5 +51,9 @@
                                     Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding Customers}"/>
+                <!--Explicit template use-->
+                <!--ItemTemplate="{StaticResource CustomerTemplate}"/>-->
     </Grid>
 </UserControl>

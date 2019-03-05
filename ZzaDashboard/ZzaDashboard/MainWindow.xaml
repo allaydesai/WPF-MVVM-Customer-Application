@@ -6,19 +6,35 @@
         Title="MainWindow"
         Height="350"
         Width="525">
+    <!--Wiring up View Model-->
+    <!--ViewModel-First MVVM Hookup-->
+    <!--<Window.DataContext>
+        <local:MainWindowViewModel /> 
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type Customers:CustomerListViewModel}">
+            <Customers:CustomerListView />
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Grid>
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+    </Grid>-->
+    
     <Grid>
         
         <TabControl >
+            <TabItem Header="ListView">
+                <Grid Background="#FFE5E5E5">
+                    <Customers:CustomerListView />
+                </Grid>
+            </TabItem>
             <TabItem Header="EditView">
                 <Grid Background="#FFE5E5E5">
                     <Customers:CustomerEditView HorizontalAlignment="Left"
                                                 Margin="42,35,0,0"
                                                 VerticalAlignment="Top" />
-                </Grid>
-            </TabItem>
-            <TabItem Header="ListView">
-                <Grid Background="#FFE5E5E5">
-                    <Customers:CustomerListView />
                 </Grid>
             </TabItem>
             <TabItem Header="DetailView">
