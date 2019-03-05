@@ -12,8 +12,8 @@ namespace ZzaDashboard.Customers
 {
     public class CustomerListViewModel
     {
-        private ICustomersRepository _repo = new CustomersRepository(); 
-        public ObservableCollection<Customer> Customers { get; set; }
+        private ICustomersRepository _repo = new CustomersRepository();
+        private ObservableCollection<Customer> _customers;
 
         public CustomerListViewModel()
         {
@@ -22,5 +22,7 @@ namespace ZzaDashboard.Customers
             // Async function returns a Task.result() gives list => List using which construct a collection
             Customers = new ObservableCollection<Customer>(_repo.GetCustomersAsync().Result);
         }
+
+        public ObservableCollection<Customer> Customers { get => _customers; set => _customers = value; }
     }
 }

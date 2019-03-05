@@ -12,6 +12,26 @@
         <cust:CustomerListViewModel />
     </UserControl.DataContext>-->
     <Grid>
-        <DataGrid ItemsSource="{Binding Customers}" />
+        <!--<DataGrid ItemsSource="{Binding Customers}" />-->
+        <DataGrid x:Name="customerDataGrid"
+                  AutoGenerateColumns="False"
+                  EnableRowVirtualization="True"
+                  ItemsSource="{Binding Customers}"
+                  RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="firstNameColumn"
+                                    Binding="{Binding FirstName}"
+                                    Header="First Name"
+                                    Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="lastNameColumn"
+                                    Binding="{Binding LastName}"
+                                    Header="Last Name"
+                                    Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="phoneColumn"
+                                    Binding="{Binding Phone}"
+                                    Header="Phone"
+                                    Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
