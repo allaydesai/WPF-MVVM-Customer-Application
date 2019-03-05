@@ -13,20 +13,33 @@ using ZzaDashboard.Services;
 
 namespace ZzaDashboard.Customers
 {
-    public class CustomerListViewModel
+    public class CustomerListViewModel: INotifyPropertyChanged
     {
         private ICustomersRepository _repo = new CustomersRepository();
         private ObservableCollection<Customer> _customers;
         private Customer _selectedCustomer;
+
+        //delegate trick where we assign an empty anonymous method in as a subscriber
+        //That means that subscriber is always in the list, and you never have to worry about PropertyChanged being null
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
         public RelayCommand DeleteCommand { get; private set; }
 
         public CustomerListViewModel()
         {
+            //if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+            //    return;
+            //// Async function returns a Task.result() gives list => List using which construct a collection
+            //Customers = new ObservableCollection<Customer>(_repo.GetCustomersAsync().Result);
+            DeleteCommand = new RelayCommand(OnDelete, CanDelete);
+        }
+
+        public async void LoadCustomer()
+        {
             if (DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
                 return;
             // Async function returns a Task.result() gives list => List using which construct a collection
-            Customers = new ObservableCollection<Customer>(_repo.GetCustomersAsync().Result);
-            DeleteCommand = new RelayCommand(OnDelete, CanDelete);
+            Customers = new ObservableCollection<Customer>(await _repo.GetCustomersAsync());
         }
 
         private bool CanDelete()
@@ -39,9 +52,25 @@ namespace ZzaDashboard.Customers
             Customers.Remove(SelectedCustomer);
         }
 
-        public ObservableCollection<Customer> Customers { get => _customers; set => _customers = value; }
+        public ObservableCollection<Customer> Customers
+        {
+            get
+            {
+                return _customers;
+            }
+            set
+            {
+                if (_customers != value)
+                {
+                    _customers = value;
+                    //raise property changed event
+                    PropertyChanged(this, new PropertyChangedEventArgs("Customers"));
+                }
+                
+            }
+        }
 
-        
+
         public Customer SelectedCustomer {
             get
             {
@@ -49,9 +78,16 @@ namespace ZzaDashboard.Customers
             }
             set
             {
-                _selectedCustomer = value;
-                DeleteCommand.RaiseCanExecuteChanged();
+                if (_selectedCustomer != value)
+                {
+                    _selectedCustomer = value;
+                    DeleteCommand.RaiseCanExecuteChanged();
+                    PropertyChanged(this, new PropertyChangedEventArgs("SelectedCustomer"));
+                }
+                
+                
             }
         }
+
     }
 }

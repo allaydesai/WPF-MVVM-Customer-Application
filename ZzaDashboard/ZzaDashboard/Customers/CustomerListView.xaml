@@ -8,7 +8,8 @@
              xmlns:data="clr-namespace:Zza.Data;assembly=Zza.Data"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             local:ViewModelLocator.AutoWireViewModel="True">
+             local:ViewModelLocator.AutoWireViewModel="True"
+             local:MVVM_Behaviors.LoadedMethodName="LoadCustomer">
     <!--<UserControl.DataContext>
         <cust:CustomerListViewModel />
     </UserControl.DataContext>-->
@@ -38,11 +39,20 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <Button Content="Delete"
-                Command="{Binding DeleteCommand}"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Width="75"/>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Delete"
+                    Command="{Binding DeleteCommand}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Width="75" />
+            <Button Content="Change Customer"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Width="100"
+                    Click="OnChangeCustomer"/>
+                    
+        </StackPanel>
+        
         <!--<DataGrid ItemsSource="{Binding Customers}" />-->
         <DataGrid x:Name="customerDataGrid"
                   AutoGenerateColumns="False"

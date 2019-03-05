@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Zza.Data;
 
 namespace ZzaDashboard.Customers
 {
@@ -24,6 +25,12 @@ namespace ZzaDashboard.Customers
         {
             //this.DataContext = new CustomerListViewModel();
             InitializeComponent();
+        }
+
+        private void OnChangeCustomer(object sender, RoutedEventArgs e)
+        {
+            var cust = customerDataGrid.SelectedItem as Customer;
+            cust.FirstName = "Changed in background";
         }
     }
 }
