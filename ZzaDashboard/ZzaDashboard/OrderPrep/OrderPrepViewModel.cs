@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ZzaDesktop;
 
-namespace ZzaDashboard.Customers
+namespace ZzaDashboard.OrderPrep
 {
-    class CustomerListViewModel : BindableBase
+    class OrderPrepViewModel : BindableBase
     {
     }
 }

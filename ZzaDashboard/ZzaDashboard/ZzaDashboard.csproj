@@ -73,6 +73,10 @@
       <DependentUpon>CustomerEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Customers\CustomerEditViewModel.cs" />
+    <Compile Include="Customers\CustomerListDemoView.xaml.cs">
+      <DependentUpon>CustomerListDemoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Customers\CustomerListDemoViewModel.cs" />
     <Compile Include="Customers\CustomerListView.xaml.cs">
       <DependentUpon>CustomerListView.xaml</DependentUpon>
     </Compile>
@@ -82,6 +86,14 @@
     </Compile>
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="MVVM Behaviors.cs" />
+    <Compile Include="OrderPrep\OrderPrepView.xaml.cs">
+      <DependentUpon>OrderPrepView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OrderPrep\OrderPrepViewModel.cs" />
+    <Compile Include="Orders\OrderView.xaml.cs">
+      <DependentUpon>OrderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Orders\OrderViewModel.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Services\CustomersRepository.cs" />
     <Compile Include="Services\ICustomersRepository.cs" />
@@ -91,6 +103,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ShowNotificationMessageBehavior.cs" />
     <Compile Include="ValidatableBindableBase.cs" />
     <Compile Include="ViewModelLocator.cs" />
   </ItemGroup>
@@ -138,11 +151,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Customers\CustomerListDemoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Customers\CustomerListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OrderPrep\OrderPrepView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Orders\OrderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,17 +12,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Zza.Data;
 
 namespace ZzaDashboard.Customers
 {
     /// <summary>
     /// Interaction logic for CustomerListView.xaml
     /// </summary>
-    public partial class CustomerListView : UserControl
+    public partial class CustomerListDemoView : UserControl
     {
-        public CustomerListView()
+        public CustomerListDemoView()
         {
+            //this.DataContext = new CustomerListViewModel();
             InitializeComponent();
+        }
+
+        private void OnChangeCustomer(object sender, RoutedEventArgs e)
+        {
+            var cust = customerDataGrid.SelectedItem as Customer;
+            cust.FirstName = "Changed in background";
         }
     }
 }

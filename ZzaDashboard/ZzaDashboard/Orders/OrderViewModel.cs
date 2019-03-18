@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ZzaDesktop;
 
-namespace ZzaDashboard.Customers
+namespace ZzaDashboard.Orders
 {
-    class CustomerListViewModel : BindableBase
+    class OrderViewModel : BindableBase
     {
+
     }
 }

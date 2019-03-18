@@ -2,13 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Customers="clr-namespace:ZzaDashboard.Customers"
+        xmlns:prep="clr-namespace:ZzaDashboard.OrderPrep"
+        xmlns:order="clr-namespace:ZzaDashboard.Orders"
         xmlns:local="clr-namespace:ZzaDashboard"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Title="MainWindow"
         Height="350"
         Width="525">
     <!--Wiring up View Model-->
     <!--ViewModel-First MVVM Hookup-->
-    <!--<Window.DataContext>
+    <Window.DataContext>
         <local:MainWindowViewModel /> 
     </Window.DataContext>
 
@@ -16,18 +19,55 @@
         <DataTemplate DataType="{x:Type Customers:CustomerListViewModel}">
             <Customers:CustomerListView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type order:OrderViewModel}">
+            <order:OrdersView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type prep:OrderPrepViewModel}">
+            <prep:OrderPrepView />
+        </DataTemplate>
     </Window.Resources>
-    
+
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}"/>
-    </Grid>-->
-    
-    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="NavBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Customers"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="customers"
+                    Grid.Column="0"/>
+            <Button Content="OrderPrep"
+                    Command="{Binding NavCommand}"
+                    CommandParameter="orderPrep"
+                    Grid.Column="2"/>
+        </Grid>
+        <Grid x:Name="MainContent"
+              Grid.Row="1">
+            <ContentControl Content="{Binding CurrentViewModel}" />
+        </Grid>
+    </Grid>
         
-        <TabControl >
+        <!--<TabControl >
             <TabItem Header="ListView">
                 <Grid Background="#FFE5E5E5">
-                    <Customers:CustomerListView />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ContentControl>
+                        <i:Interaction.Behaviors>
+                            <local:ShowNotificationMessageBehavior Message="{Binding NotificationMessage}"/>
+                        </i:Interaction.Behaviors>
+                    </ContentControl>
+                    --><!--<Customers:CustomerListView />--><!--
+                    <ContentControl Content="{Binding CurrentViewModel}"
+                                    Grid.Row="1"/>
                 </Grid>
             </TabItem>
             <TabItem Header="EditView">
@@ -42,6 +82,6 @@
                     <Customers:CustomerDetailView />
                 </Grid>
             </TabItem>
-        </TabControl>
-    </Grid>
+        </TabControl>-->
+    
 </Window>

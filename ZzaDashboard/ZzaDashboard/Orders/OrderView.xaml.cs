@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ZzaDashboard.Customers
+namespace ZzaDashboard.Orders
 {
     /// <summary>
-    /// Interaction logic for CustomerListView.xaml
+    /// Interaction logic for OrdersView.xaml
     /// </summary>
-    public partial class CustomerListView : UserControl
+    public partial class OrdersView : UserControl
     {
-        public CustomerListView()
+        public OrdersView()
         {
             InitializeComponent();
         }
