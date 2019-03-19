@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Zza.Data;
 using ZzaDashboard.Customers;
 using ZzaDashboard.OrderPrep;
 using ZzaDashboard.Orders;
@@ -20,12 +21,17 @@ namespace ZzaDashboard
         private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
         private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();
         private OrderViewModel _orderViewModel = new OrderViewModel();
+        private AddEditCustomerViewModel _addEditViewModel = new AddEditCustomerViewModel();
 
         private BindableBase _CurrentViewModel;
 
         public MainWindowViewModel()
         {
             NavCommand = new RelayCommand<string>(OnNav);
+            // subscribe
+            _customerListViewModel.PlaceOrderRequested += NavToOrder;
+            _customerListViewModel.AddCustomerRequested += NavToAddCustomer;
+            _customerListViewModel.EditCustomerRequested += NavToEditCustomer;
         }
 
         public BindableBase CurrentViewModel
@@ -51,7 +57,26 @@ namespace ZzaDashboard
             }
         }
 
+        private void NavToOrder(Guid customerId)
+        {
+            _orderViewModel.CustomerId = customerId;
+            CurrentViewModel = _orderViewModel;
+        }
 
+        private void NavToEditCustomer(Customer cust)
+        {
+            _addEditViewModel.EditMode = true;
+            // Imperative call to a method
+            _addEditViewModel.SetCustomer(cust);
+            CurrentViewModel = _addEditViewModel;
+        }
+
+        private void NavToAddCustomer(Customer cust)
+        {
+            _addEditViewModel.EditMode = false;
+            _addEditViewModel.SetCustomer(cust);
+            CurrentViewModel = _addEditViewModel;
+        }
 
         //!!!! OLD CODE!!!
         //public MainWindowViewModel()
@@ -59,7 +84,7 @@ namespace ZzaDashboard
         //    //CurrentViewModel = new CustomerListViewModel();
         //    //_timer.Elapsed += (s, e) => NotificationMessage = "At the tone time will be: " + DateTime.Now.ToLocalTime();
         //    //_timer.Start();
-            
+
         //    //NotificationMessage = "At the tone time will be: " + DateTime.Now.ToLocalTime();
 
         //}

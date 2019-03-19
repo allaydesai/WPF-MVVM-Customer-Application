@@ -65,6 +65,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindableBase.cs" />
+    <Compile Include="Customers\AddEditCustomerView.xaml.cs">
+      <DependentUpon>AddEditCustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Customers\AddEditCustomerViewModel.cs" />
     <Compile Include="Customers\CustomerDetailView.xaml.cs">
       <DependentUpon>CustomerDetailView.xaml</DependentUpon>
     </Compile>
@@ -143,6 +147,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Customers\AddEditCustomerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Customers\CustomerDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
