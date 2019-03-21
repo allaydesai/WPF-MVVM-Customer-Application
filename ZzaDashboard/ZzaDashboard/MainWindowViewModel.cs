@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Unity;
 using Zza.Data;
 using ZzaDashboard.Customers;
 using ZzaDashboard.OrderPrep;
 using ZzaDashboard.Orders;
+using ZzaDashboard.Services;
 using ZzaDesktop;
 
 namespace ZzaDashboard
@@ -18,20 +20,30 @@ namespace ZzaDashboard
     {
         //private Timer _timer = new Timer(5000); //5s
 
-        private CustomerListViewModel _customerListViewModel = new CustomerListViewModel();
+        private CustomerListViewModel _customerListViewModel;
         private OrderPrepViewModel _orderPrepViewModel = new OrderPrepViewModel();
         private OrderViewModel _orderViewModel = new OrderViewModel();
-        private AddEditCustomerViewModel _addEditViewModel = new AddEditCustomerViewModel();
+        private AddEditCustomerViewModel _addEditViewModel;
 
         private BindableBase _CurrentViewModel;
 
         public MainWindowViewModel()
         {
             NavCommand = new RelayCommand<string>(OnNav);
+
+            _customerListViewModel = ContainerHelper.Container.Resolve<CustomerListViewModel>();
+            _addEditViewModel = ContainerHelper.Container.Resolve<AddEditCustomerViewModel>();
+            
             // subscribe
             _customerListViewModel.PlaceOrderRequested += NavToOrder;
             _customerListViewModel.AddCustomerRequested += NavToAddCustomer;
             _customerListViewModel.EditCustomerRequested += NavToEditCustomer;
+            _addEditViewModel.Done += NavToCustomerList;
+        }
+
+        private void NavToCustomerList()
+        {
+            CurrentViewModel = _customerListViewModel;
         }
 
         public BindableBase CurrentViewModel

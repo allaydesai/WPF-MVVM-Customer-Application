@@ -12,16 +12,20 @@ namespace ZzaDashboard.Customers
 {
     class CustomerListViewModel : BindableBase
     {
-        private ICustomersRepository _repo = new CustomersRepository();
+        private ICustomersRepository _repo;
+        private List<Customer> _allCustomers;
 
-        public CustomerListViewModel()
+        public CustomerListViewModel(ICustomersRepository repo)
         {
+            _repo = repo;
             PlaceOrderCommand = new RelayCommand<Customer>(OnPlaceOrder);
             AddCustomerCommand = new RelayCommand(OnAddCustomer);
             EditCustomerCommand = new RelayCommand<Customer>(OnEditCustomer);
+            ClearSearchCommand = new RelayCommand(OnClearSearch);
         }
 
-   
+        
+
 
         private ObservableCollection<Customer> _customers;
         public ObservableCollection<Customer> Customers
@@ -30,9 +34,36 @@ namespace ZzaDashboard.Customers
             set => SetProperty(ref _customers, value);
         }
 
+        private string _searchInput;
+
+        public string SearchInput
+        {
+            get => _searchInput;
+            set
+            {
+                SetProperty(ref _searchInput, value);
+                FilterCustomers(_searchInput);
+            }
+        }
+
+        private void FilterCustomers(string searchInput)
+        {
+            if (string.IsNullOrWhiteSpace(searchInput))
+            {
+                Customers = new ObservableCollection<Customer>(_allCustomers);
+                return;
+            }
+            else
+            {
+                Customers = new ObservableCollection<Customer>(_allCustomers.Where(c => c.FullName.ToLower().Contains(searchInput.ToLower())));
+            }
+        }
+    
+
         public async void LoadCustomers()
         {
-            Customers = new ObservableCollection<Customer>(await _repo.GetCustomersAsync());
+            _allCustomers = await _repo.GetCustomersAsync();
+            Customers = new ObservableCollection<Customer>(_allCustomers);
         }
 
         public RelayCommand<Customer> PlaceOrderCommand { get; private set; }
@@ -58,6 +89,12 @@ namespace ZzaDashboard.Customers
         private void OnEditCustomer(Customer cust)
         {
             EditCustomerRequested(cust);
+        }
+
+        public RelayCommand ClearSearchCommand { get; private set; }
+        private void OnClearSearch()
+        {
+            SearchInput=null;
         }
     }
 }
